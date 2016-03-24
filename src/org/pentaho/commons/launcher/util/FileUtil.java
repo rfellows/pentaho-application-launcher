@@ -72,7 +72,14 @@ public class FileUtil {
     final List<File> files = new ArrayList<File>( classpathPaths.size() );
 
     for ( String path : classpathPaths ) {
-      files.add( new File( appDir, path ) );
+      // lets see if the path is absolute or relative
+      File cpFile = new File( path );
+      if ( cpFile.isAbsolute() ) {
+        files.add( cpFile );
+      } else {
+        files.add( new File( appDir, path ) );
+      }
+
     }
 
     return fileListToURLList( files, outputPrintStream );
